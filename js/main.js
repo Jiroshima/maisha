@@ -11,8 +11,8 @@ const sketchHolder = document.getElementById('sketch');
  * A class to hold a repeating sequence of anything: numbers, characters, etc.
  */
 
-import { Sequence } from './sequence.js' 
-import './lib/p5.min.js';
+import { Sequence } from './sequence.js' //imports the sequence file into main program
+import './lib/p5.min.js'; //imports the p5js file 
 
 // our sequence to draw -- customise this as you'd like (you can even use emoji)
 
@@ -30,7 +30,7 @@ const lookup = {
     '1': `hsla(120, 100%, 70%, 1)`,
         '.': `hsla(0,  100%, 60%, 1)`,
         ' ': `hsla(90, 100%, 10%,1)`,
-        'X': 'hsla(200, 100%, 40%,1)',
+        'X': 'hsla(200, 100%, 40%,1)', 
         'e':'hsla(30, 100%, 80%,1)',
         'E':'hsla(0, 0%,100%,1)',
 
@@ -67,23 +67,23 @@ const lookup = {
  * @param {Sequence} sequence to draw
  * @param {Integer} size horizontal size
  */
-function drawSequence(sequence, size) {
-const elementWidth = size;
-const elementHeight = size;
-const charWidth = 600 / size;
+function drawSequence(sequence, size) { //creates a function called drawsequence that takes the parameters sequence and size 
+const elementWidth = size; // creates constant for width 
+const elementHeight = size; //creates constant for height = size passed thru 
+const charWidth = 600 / size; //calcualtes the character width and height, 600px 
 const charHeight = 600 / size;
 
-    for (let row = 0; row < elementHeight; row++) {
-        for (let col = 0; col < elementWidth; col++) {
-            const element = sequence.next();
+    for (let row = 0; row < elementHeight; row++) {  //iterates through the rows 
+        for (let col = 0; col < elementWidth; col++) { //iterates through the collumns 
+            const element = sequence.next(); //grabs the next element from the internal class variable sequence
 
-            const x = col * charWidth;
-            const y = row * charHeight;
+            const x = col * charWidth; //calculates the x and y coordinates for the character width and height 
+            const y = row * charHeight; 
 
-            fill(lookup[element]);
-            textSize(charHeight);
-            text(element, x, y + charHeight);
-            // Update x for the next element in the row
+            fill(lookup[element]); //looks up the colour of the element then fills it 
+            textSize(charHeight); //sets text size 
+            text(element, x, y + charHeight); //puts the element in the coordinates 
+      
         }
     }
     sequence.index = 0;
@@ -108,7 +108,7 @@ window.setup = function () {
  * DRAW --------------------------------------------------
  */
 window.draw = function() {
-    drawSequence(sequence, 30)
+    drawSequence(sequence, 40) //draws sketch depending on size
     // background(25);
     // drawSequenceFromArray(sequence, 5);
 }
