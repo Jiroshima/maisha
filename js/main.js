@@ -11,44 +11,45 @@ const sketchHolder = document.getElementById('sketch');
  * A class to hold a repeating sequence of anything: numbers, characters, etc.
  */
 
-class Sequence 
-{
-    sequence; // Array: an array holding the sequence index; // Integer: current index in the sequence, from 0 to the length of the sequence - 1
-    index; 
-
+class Sequence {
+    /* Internal variables for this class */
+    sequence; // Array: an array holding the sequence
+    index; // Integer: current index in the sequence, from 0 to the length of the sequence - 1
+    
     /**
      * Constructor: create a sequence from an array
      * @param {Array} list The list of elements for this sequence in an Array
      */
-    constructor (list)
-    {
-        // --------- STEP 2 ----------------------------
+    constructor(list) {
+        
+        this.sequence = [];
+        for (let i = 0; i < list.length; i++) {
+            this.sequence.push(list[i]);
+        }
 
-        // copy the array elements from list to our internal sequence variable starting at
-        // the beginning element 0
-
-        // Hint: the variable is called this.sequence inside this class
-       
-        // set the start index
+        this.index = 0; 
     }
-
+    set index(i) {
+      this.index = i;
+  
+    }
     /**
-     * Return the current element in the sequence and advance the sequence index
+     * return the current element in the sequence and advance the sequence index
      */
-    next()
-    {
-        // --------- STEP 3 ----------------------------
+  
+    next() {
+        const currentElement = this.sequence[this.index]; 
+        this.index = (this.index + 1) % this.sequence.length; 
+        return currentElement; 
     }
-
-}
+  }
 // our sequence to draw -- customise this as you'd like (you can even use emoji)
-let sequenceArray = ['0', '0', '1', '1', '.', '.', '.'];
-let sequence = new Sequence(sequenceArray);//['X','e','E']
-     
+
 
 // --------- STEP 5 ----------------------------
 // create an instance of the sequence class
-
+let sequenceArray = ['0', '0', '1', '1', '.', '.', '.'];
+let sequence = new Sequence(sequenceArray);
 
 // --------- STEP 4 ----------------------------
 //
@@ -67,45 +68,25 @@ const lookup = {
 
 // --------- STEP 1 ----------------------------
 
-function drawSequenceFromArray(sequence, numRows) {
-    textSize(40);
-    let elementWidth = width/7;
-    let elementHeight = height/7;
-    let x = 0;
-    let y = 0;
+// function drawSequenceFromArray(sequence, numRows) {
+//     textSize(40);
+//     let elementWidth = width/7;
+//     let elementHeight = height/7;
+//     let x = 0;
+//     let y = 0;
 
-    for (let row = 0; row <6; row++) {
-        for (let element of sequenceArray) {
-            fill(lookup[element]);
-            text(element,x,y);
+//     for (let row = 0; row <6; row++) {
+//         for (let element of sequenceArray) {
+//             fill(lookup[element]);
+//             text(element,x,y);
 
-            x = x + elementWidth;
-        }
-        x = 0;
-        y += elementHeight;
-    }
-class Sequence {
+//             x = x + elementWidth;
+//         }
+//         x = 0;
+//         y += elementHeight;
+//     }
 
-   
-    constructor(list) {
-        this.sequence = sequence.sequence;
-        this.index = 0;
-    }
-
-    next () {
-        if (this.index < this.sequence.length){
-            return this.sequence[this.index++];
-
-        } else {
-            this.index=0
-            return this.sequence[this,index++];
-        }
-    }
-}
-
-}
-
-
+// }
 
 
 // --------- STEP 6 ----------------------------
@@ -116,27 +97,26 @@ class Sequence {
  * @param {Integer} size horizontal size
  */
 function drawSequence(sequence, size) {
+const elementWidth = size;
+const elementHeight = size;
+const charWidth = 600 / size;
+const charHeight = 600 / size;
 
-        textSize(40);
-        let elementWidth = width / size;
-        let elementHeight = height / sequence.sequence.length;
-        let x = 0;
-        let y = 0;
-   
-        for (let row = 0; row < sequence.sequence.length; row++) {
-            for (let i = 0; i < size; i++) {
-                let element = sequence.next();
-                fill(lookup[element]);
-                text(element, x + i * elementWidth, y);
-                // Update x for the next element in the row
-                x = x + elementWidth;
-            }
-            // Reset x for the next row
-            x = 0;
-            // Update y for the next row
-            y += elementHeight;
+    for (let row = 0; row < elementHeight; row++) {
+        for (let col = 0; col < elementWidth; col++) {
+            const element = sequence.next();
+
+            const x = col * charWidth;
+            const y = row * charHeight;
+
+            fill(lookup[element]);
+            textSize(charHeight);
+            text(element, x, y + charHeight);
+            // Update x for the next element in the row
         }
     }
+    sequence.index = 0;
+}
    
 
 {
@@ -157,7 +137,7 @@ window.setup = function () {
  * DRAW --------------------------------------------------
  */
 window.draw = function() {
-    drawSequence(sequence, 20)
+    drawSequence(sequence, 30)
     // background(25);
     // drawSequenceFromArray(sequence, 5);
 }
