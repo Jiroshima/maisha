@@ -8,13 +8,8 @@ export class Sequence {
      * @param {Array} list The list of elements for this sequence in an Array
      */
     constructor(list) {
-        
-        this.sequence = [];
-        for (let i = 0; i < list.length; i++) {
-            this.sequence.push(list[i]);
-        }
-
-        this.index = 0; 
+        this.sequence = [...list]; // Use spread operator for array copy
+        this.index = 0;
     }
     set index(i) {
       this.index = i;
